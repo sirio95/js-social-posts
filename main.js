@@ -58,33 +58,47 @@ const posts = [
 
 let socialFeed= document.getElementById("container");
 
-for(let i=0; i<posts.length; i++){
-    //step 1 -- estrarre info authore
-    let element=posts[i];
-    let element2= element["author"];
+
+posts.forEach((element) =>{
+
+    let autore= element.author;
+
+    console.log(autore);
+
+    socialFeed.innerHTML +=`
+        <div class="post">
+            <div class="post__header">
+                <div class="post-meta">                    
+                    <div class="post-meta__icon">
+                        <img class="profile-pic" src="${autore["image"]}" alt="${autore["name"]}">                    
+                    </div>
+                    <div class="post-meta__data">
+                        <div class="post-meta__author">${autore["name"]}</div>
+                        <div class="post-meta__time">${element.created}</div>
+                    </div>                    
+                </div>
+            </div>
+            <div class="post__text">${element.content}</div>
+            <div class="post__image">
+                <img src="${element.media}" alt="">
+            </div>
+            <div class="post__footer">
+                <div class="likes js-likes">
+                    <div class="likes__cta">
+                        <a class="like-button  js-like-button" href="#" data-postid="1">
+                            <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                            <span class="like-button__label">Mi Piace</span>
+                        </a>
+                    </div>
+                    <div class="likes__counter">
+                        Piace a <b id="like-counter-1" class="js-likes-counter">${element.likes}</b> persone
+                    </div>
+                </div> 
+            </div>            
+        </div>
+    `
+});
 
 
-    const author=[];
-    if(!author.includes(element2)){
-        author.push(element2)
-    };
-
-    let elementiImportanti= author[0];
-    
-    //step 2 -- iniziare creazione dei post
-
-    let post= createDivClass(socialFeed, "post");
-
-    let post2= createHeader(post, elementiImportanti.image, elementiImportanti.name, element.created);
-    let post3= createText(post, element.image);
-    let post4= createFooter(post, element.likes);
-
-    post.innerHTML += `${post2}${post3}${post4}`
-
-    socialFeed.append(post);
-    
-     
-
-}
 
 
